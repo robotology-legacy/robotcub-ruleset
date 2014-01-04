@@ -1,0 +1,132 @@
+#
+# Created by Daniele E. Domenichelli <daniele.domenichelli@iit.it>
+#
+
+create repository icub-main
+end repository
+
+
+
+# deleted/broken tags
+match /tags/(iCub-1.0.4.1|iCub1.0.4)/
+end match
+
+match /(backup|trink)/
+end match
+
+match /(trunk|tags|branches)/([^/]+)(/main)?/$
+  action recurse
+end match
+
+# Skipped subdirectories belonging to other repositories (NOTE: /admin is not skipped)
+
+match /(trunk|tags|branches)/([^/]+)/(contrib|firmware|doc|license|packaging|pc104|tutorials|yarp2)/
+end match
+
+
+# MASTER
+
+# Ignore TEST file
+match /trunk/iCub(/main)?/TEST
+end match
+
+# Ignore backup folder
+match /trunk/iCub(/main)?/backup/
+end match
+
+
+# Skip some broken revision
+
+match /trunk/iCub(/main)?/
+  min revision 7631
+  max revision 7631
+end match
+
+match /trunk/iCub(/main)?/
+  min revision 8005
+  max revision 8005
+end match
+
+# Remove app/demoy3
+match /trunk/iCub(/main)?/
+  min revision 8109
+  max revision 8109
+end match
+
+# Remove conf
+match /trunk/iCub(/main)?/
+  min revision 8168
+  max revision 8168
+end match
+
+### 8326 ?
+
+match /trunk/iCub(/main)?/
+  min revision 8598
+  max revision 8598
+end match
+
+match /trunk/iCub(/main)?/
+  min revision 8729
+  max revision 8729
+end match
+
+match /trunk/iCub(/main)?/
+  min revision 8742
+  max revision 8742
+end match
+
+
+match /trunk/iCub(/main)?/
+  min revision 8799
+  max revision 8799
+end match
+
+match /trunk/iCub(/main)?/
+  min revision 9032
+  max revision 9032
+end match
+
+#match /trunk/iCub(/main)?/
+#  min revision 23270
+#  max revision 23271
+#end match
+
+match /trunk/iCub(/main)?/
+  repository icub-main
+  branch master
+end match
+
+
+
+# TAGS
+
+match /tags/iCub-?(\d+).(\d+).(\d+)(/main)?/
+  repository icub-main
+  branch refs/tags/v\1.\2.\3
+  annotated true
+end match
+
+
+
+# BRANCHES
+
+match /branches/(iCub.2.0|iCub2.0)(/main)?/
+  repository icub-main
+  branch icub-2.0
+end match
+
+match /branches/(iCub-)?idl(/main)?/
+  repository icub-main
+  branch idl
+end match
+
+match /branches/iCubNewAppInstall(/main)?/
+  repository icub-main
+  branch new-app-install
+end match
+
+
+# Ignore everything else
+match /
+end match

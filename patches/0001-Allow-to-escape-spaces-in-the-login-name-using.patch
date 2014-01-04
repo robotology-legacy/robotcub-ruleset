@@ -1,0 +1,43 @@
+From 7b64e409ac3dd6c5d1587bbfbd04c9217963ee1b Mon Sep 17 00:00:00 2001
+From: "Daniele E. Domenichelli" <daniele.domenichelli@iit.it>
+Date: Sat, 4 Jan 2014 03:06:10 +0100
+Subject: [PATCH] Allow to escape spaces in the login name using "\ "
+
+---
+ src/main.cpp | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/src/main.cpp b/src/main.cpp
+index ec969c5..64d8277 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -48,7 +48,17 @@ QHash<QByteArray, QByteArray> loadIdentityMapFile(const QString &fileName)
+         if (comment_pos != -1)
+             line.truncate(comment_pos);
+         line = line.trimmed();
+-        int space = line.indexOf(' ');
++        int curr_pos = 0;
++        int space;
++        while (curr_pos != -1) {
++            space = line.indexOf(' ', curr_pos);
++            // Allow to escape spaces in the login name using "\ "
++            if(line.at(space -1) != '\\') {
++                break;
++            }
++            curr_pos = space + 1;
++        }
++
+         if (space == -1)
+             continue;           // invalid line
+ 
+@@ -66,6 +76,7 @@ QHash<QByteArray, QByteArray> loadIdentityMapFile(const QString &fileName)
+ 
+         QByteArray realname = line.mid(rightspace).trimmed();
+         line.truncate(leftspace);
++        line.replace("\\ ", " ");
+ 
+         result.insert(line, realname);
+     };
+-- 
+1.8.5.2
+

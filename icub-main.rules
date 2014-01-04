@@ -1,0 +1,80 @@
+#
+# Created by Daniele E. Domenichelli <daniele.domenichelli@iit.it>
+#
+
+create repository icub-main
+end repository
+
+
+
+# deleted/broken tags
+match /tags/(iCub-1.0.4.1|iCub1.0.4)/
+end match
+
+match /(backup|trink)/
+end match
+
+match /(trunk|tags|branches)/([^/]+)/$
+  action recurse
+end match
+
+# Skipped subdirectories belonging to other repositories (NOTE: /admin is not skipped)
+
+match /(trunk|tags|branches)/([^/]+)/(contrib|firmware|doc|license|packaging|pc104|tutorials|yarp2)/
+end match
+
+
+# MASTER
+
+# Ignore TEST file
+match /trunk/iCub(/main)?/TEST
+end match
+
+# Ignore backup folder
+match /trunk/iCub(/main)?/backup/
+end match
+
+
+match /trunk/iCub/
+  min revision 23270
+  max revision 23271
+end match
+
+match /trunk/iCub/
+  repository icub-main
+  branch master
+end match
+
+
+
+# TAGS
+
+match /tags/iCub-?(\d+).(\d+).(\d+)/
+  repository icub-main
+  branch refs/tags/v\1.\2.\3
+  annotated true
+end match
+
+
+
+# BRANCHES
+
+match /branches/(iCub.2.0|iCub2.0)/
+  repository icub-main
+  branch icub-2.0
+end match
+
+match /branches/(iCub-)?idl/
+  repository icub-main
+  branch idl
+end match
+
+match /branches/iCubNewAppInstall/
+  repository icub-main
+  branch new-app-install
+end match
+
+
+# Ignore everything else
+match /
+end match
