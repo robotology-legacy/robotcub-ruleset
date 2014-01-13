@@ -1,3 +1,4 @@
 .*-swp
-/icub-main*/
-log-icub-main
+/icub-*/
+log-icub-*
+gitlog-icub-*
