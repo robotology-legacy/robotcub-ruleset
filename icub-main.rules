@@ -18,14 +18,6 @@ match /(trunk|tags|branches)/([^/]+)/$
   action recurse
 end match
 
-# Skipped subdirectories belonging to other repositories (NOTE: /admin is not skipped)
-
-match /(trunk|tags|branches)/([^/]+)/(contrib|firmware|doc|license|packaging|pc104|tutorials|yarp2)/
-end match
-
-
-# MASTER
-
 # Ignore TEST file
 match /trunk/iCub(/main)?/TEST
 end match
@@ -34,11 +26,19 @@ end match
 match /trunk/iCub(/main)?/backup/
 end match
 
-
-match /trunk/iCub/
+# Skip broken revisions
+match /
   min revision 23270
   max revision 23271
 end match
+
+
+# Skipped subdirectories belonging to other repositories (NOTE: /admin is not skipped)
+match /(trunk|tags|branches)/([^/]+)/(contrib|firmware|doc|license|packaging|pc104|tutorials|yarp2)/
+end match
+
+
+# MASTER
 
 match /trunk/iCub/
   repository icub-main
