@@ -1,0 +1,57 @@
+#
+# Created by Daniele E. Domenichelli <daniele.domenichelli@iit.it>
+#
+
+create repository icub-packaging
+end repository
+
+
+
+# deleted/broken tags
+match /tags/(iCub-1.0.4.1|iCub1.0.4)/
+end match
+
+match /(backup|trink)/
+end match
+
+match /(trunk|tags|branches)/([^/]+)/$
+  action recurse
+end match
+
+# Ignore TEST file
+match /trunk/iCub(/main)?/TEST
+end match
+
+# Ignore backup folder
+match /trunk/iCub(/main)?/backup/
+end match
+
+# Skip broken revisions
+match /
+  min revision 23270
+  max revision 23271
+end match
+
+
+# MASTER
+
+match /trunk/iCub/packaging/
+  repository icub-packaging
+  branch master
+end match
+
+
+# TAGS
+
+match /tags/iCub-?(\d+).(\d+).(\d+)/packaging/
+  repository icub-packaging
+  branch refs/tags/v\1.\2.\3
+  annotated true
+end match
+
+
+
+
+# Ignore everything else
+match /
+end match
