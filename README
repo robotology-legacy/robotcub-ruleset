@@ -1,14 +1,12 @@
 # Export required variables
-export RC_RULESETDIR=.../svn2git/tools/robotcub-ruleset
-export KDE_RULESETDIR=.../svn2git/tools/kde-ruleset
-export RC_SVNDIR=.../svn2git/repo/robotcub
+export SVN2GITDIR=.../svn2git/tools/svn2git
 
 # Download robotcub svn repository
 rsync -avzP svn.code.sf.net::p/robotcub/code/* $RC_SVNDIR
 
 # Download and build svn2git (requires a patch)
-git clone git://gitorious.org/svn2git/svn2git.git
-cd svn2git
+git clone git://gitorious.org/svn2git/svn2git.git $SVN2GITDIR
+cd $SVN2GITDIR
 git am patches/0001-Allow-to-escape-spaces-in-the-login-name-using.patch
 qmake
 make

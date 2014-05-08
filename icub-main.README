@@ -1,4 +1,4 @@
-svn2git/svn-all-fast-export --identity-map account-map --identity-domain users.sourceforge.net --rules icub-main.rules --add-metadata $RC_SVNDIR
+$SVN2GITDIR/svn-all-fast-export --identity-map account-map --identity-domain users.sourceforge.net --rules icub-main.rules --add-metadata $RC_SVNDIR
 
 cd icub-main
 
