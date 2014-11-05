@@ -1,0 +1,27 @@
+$SVN2GITDIR/svn-all-fast-export --identity-map account-map --identity-domain users.sourceforge.net --rules eventDriven.rules --add-metadata $RC_SVNDIR
+
+cd eventDriven
+
+$KDE_RULESETDIR/bin/remove-fb-backup-refs.sh
+$KDE_RULESETDIR/bin/remove-workbranch-refs.sh
+$KDE_RULESETDIR/bin/remove-cvs2svn-backup-tags.sh
+
+git for-each-ref --format="%(refname)" refs/backups | xargs -n 1 git update-ref -d
+
+git filter-branch -f --prune-empty \
+                     --msg-filter '$RC_RULESETDIR/fix-commit-msg.sh' \
+                     --tree-filter '$RC_RULESETDIR/eventDriven_fix-tree.sh' \
+                     --tag-name-filter 'cat' \
+                     -- --all
+git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
+
+git reflog expire --expire=now --all
+git gc --prune=now
+git gc
+git gc --aggressive
+git prune
+
+
+git remote add robotology-playground github:robotology-playground/eventDriven.git
+git config --local remote.robotology-playground.mirror true
+git push --mirror robotology-playground

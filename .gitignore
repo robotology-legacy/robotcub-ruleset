@@ -1,4 +1,5 @@
 .*-swp
 /icub-*/
-log-icub-*
-gitlog-icub-*
+/eventDriven*/
+log-*
+gitlog-*
