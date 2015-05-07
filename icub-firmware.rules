@@ -1,0 +1,180 @@
+#
+# Created by Daniele E. Domenichelli <daniele.domenichelli@iit.it>
+#
+
+create repository icub-firmware
+end repository
+
+create repository icub-firmware-build
+end repository
+
+
+
+# deleted/broken tags
+match /tags/(iCub-1.0.4.1|iCub1.0.4)/
+end match
+
+match /(backup|trink)/
+end match
+
+match /(trunk|tags|branches)/([^/]+)/$
+  action recurse
+end match
+
+# Ignore TEST file
+match /trunk/iCub(/main)?/TEST
+end match
+
+# Ignore backup folder
+match /trunk/iCub(/main)?/backup/
+end match
+
+# Skip broken revisions
+match /
+  min revision 23270
+  max revision 23271
+end match
+
+match /
+  # Moved /trunk/iCub/src/firmware/ -> /trunk/iCub/firmware/build/
+  min revision 7571
+  max revision 7575
+end match
+
+
+match /
+  # Moved /trunk/iCub/src/firmware/ -> /trunk/iCub/firmware/build/
+  min revision 7620
+  max revision 7620
+end match
+
+
+match /
+  # Moved /trunk/iCub/src/firmware/ -> /trunk/iCub/firmware/build/
+  min revision 7622
+  max revision 7622
+end match
+
+
+match /
+  # Moved /trunk/iCub/firmware/build/testing -> /trunk/iCub/firmware/build_testing
+  min revision 8635
+  max revision 8635
+end match
+
+match /
+  # broken tag
+  min revision 12096
+  max revision 12097
+end match
+
+match /
+  # broken tag
+  min revision 12415
+  max revision 12416
+end match
+
+
+# Skipped subdirectories belonging to other repositories
+match /(trunk|tags|branches)/([^/]+)/(admin|contrib|doc|license|main|packaging|pc104|tutorials|yarp2)/
+end match
+
+match /(trunk|tags|branches)/([^/]+)/src/$
+  action recurse
+end match
+
+match /(trunk|tags|branches)/([^/]+)/src/firmware/$
+  action recurse
+end match
+
+match /(trunk|tags|branches)/([^/]+)/firmware/$
+  action recurse
+end match
+
+
+# icub-firmware-build MASTER
+
+
+match /trunk/iCub/src/firmware/build/
+  repository icub-firmware-build
+  branch master
+end match
+
+match /trunk/iCub/firmware/build/
+  repository icub-firmware-build
+  branch master
+end match
+
+match /trunk/iCub/firmware/build_testing/
+  repository icub-firmware-build
+  prefix testing/
+  branch master
+end match
+
+# match /trunk/iCub/firmware/build/testing/
+#   repository icub-firmware-build
+#   prefix testing/
+#   branch master
+# end match
+
+
+# icub-firmware MASTER
+
+
+match /trunk/iCub/src/firmware/
+  repository icub-firmware
+  branch master
+end match
+
+match /trunk/iCub/firmware/
+  repository icub-firmware
+  branch master
+end match
+
+
+
+# icub-firmware-build TAGS
+
+match /tags/iCub-?(\d+).(\d+).(\d+)/iCub/src/firmware/build/
+  repository icub-firmware-build
+  branch refs/tags/icub-v\1.\2.\3
+  annotated true
+end match
+
+match /tags/iCub-?(\d+).(\d+).(\d+)/firmware/build/
+  repository icub-firmware-build
+  branch refs/tags/icub-v\1.\2.\3
+  annotated true
+end match
+
+match /tags/iCub-?(\d+).(\d+).(\d+)/firmware/build_testing/
+  repository icub-firmware-build
+  prefix testing/
+  branch master
+end match
+
+match /tags/firmware/build/release_(\d+).(\d+).(\d+)/
+  repository icub-firmware-build
+  branch refs/tags/v\1.\2.\3
+  annotated true
+end match
+
+
+# icub-firmware TAGS
+
+match /tags/iCub-?(\d+).(\d+).(\d+)/iCub/src/firmware/
+  repository icub-firmware
+  branch refs/tags/icub-v\1.\2.\3
+  annotated true
+end match
+
+match /tags/iCub-?(\d+).(\d+).(\d+)/firmware/
+  repository icub-firmware
+  branch refs/tags/icub-v\1.\2.\3
+  annotated true
+end match
+
+
+# Ignore everything else
+match /
+end match
